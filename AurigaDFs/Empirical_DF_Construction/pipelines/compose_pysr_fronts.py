@@ -1,20 +1,6 @@
 """
 Carry every fitted expression in a CV directory back onto eps_hat and recount its complexity.
 
-PySR fits log10 f = g(u), u = T(eps_hat), and reports the complexity of g in u, which charges
-nothing for the transform (a complexity-3 logit model takes 8 nodes in eps_hat). So each
-expression up to c(u) = --max-complexity (default 20; larger forms can stall sympy) is:
-
-  substituted   u -> T(eps_hat)
-  simplified    every candidate rewrite, each checked numerically on the fold's grid
-  recounted     with PySR's node metric (core.sr_complexity)
-
-The expression in u goes through the same pipeline (composed with `identity`), so the cost of
-a transform is a difference of like quantities. Two costs are kept: `complexity_eps`, the
-cheapest form found, and `complexity_eps_in_alphabet`, the cheapest within the search's
-operators (empty for tan_pi, whose forms need tan). Nothing is scored here, and each fold is
-written separately: selection happens within a fold. --pooled also writes all folds together.
-
 Reads   <cv>/fold<j>/pysr/<transform>/equations.csv
 Writes  <cv>/fold<j>/pysr_composed.csv
 """
