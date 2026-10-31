@@ -1,27 +1,12 @@
 """
 Changes of variable applied before symbolic regression.
-
-Each maps eps_hat in (0, 1) onto an unbounded axis, so that both asymptotes -- the inner
-behaviour as eps_hat -> 0 and the cliff at eps_hat -> 1 -- become expressible by a
-low-complexity analytic form. Without one, a fit has to spend complexity reproducing a
-divergence at a fixed abscissa, which symbolic regression does badly.
-
-The ordinate is never transformed: every curve here stays log10 f.
-
-`identity` is included as the control -- fitting eps_hat directly -- so a run can show
-what the change of variable actually buys.
-
-The parameterised family ln(eps_hat^gamma / (1 - eps_hat^gamma)) is deliberately absent.
-It is `logit` at gamma = 1, and choosing gamma by linearity over the whole sample would
-leak held-out halos into a cross-validation fold.
 """
 from __future__ import annotations
 
 import numpy as np
 import sympy as sp
 
-# The abscissa, as a symbol. Positive and < 1 on the fitted grid, which lets sympy
-# simplify logs and roots of eps_hat and 1 - eps_hat without a sign assumption.
+
 EPS = sp.Symbol("eps_hat", positive=True)
 
 
