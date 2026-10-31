@@ -42,7 +42,6 @@ AurigaDFs/
 | `AURIGA_DATA` | the simulations | needed only to rebuild from particles |
 | `HALO_RESULTS` | where results are read and written | `AurigaDFs/Halo_Results` |
 | `CV_DIR` | the cross-validation run used by the figures | `$HALO_RESULTS/_sr/cv_with_hubble_flow_nfw_ref02` |
-| `AURIGA_TREES` | merger trees, if kept outside `AURIGA_DATA` | – |
 | `GNUPLOT` | gnuplot for rendering figures (with pdflatex on `PATH`) | `gnuplot` on `PATH` |
 
 ## Rebuilding the results
