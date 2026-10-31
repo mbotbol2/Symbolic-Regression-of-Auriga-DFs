@@ -2,22 +2,6 @@
 Refit each functional family to the median of all 30 halos, bootstrap its parameters, and score
 the Pareto front.
 
-The CV chooses the forms; the constants quoted in the paper are refitted here on the median of
-all 30 reference-scaled curves, with each occurrence of C in a family a free parameter. Forms
-linear in their parameters (all every-fold families) are solved by least squares; the rest by
-least_squares from several starts, with a convergence flag.
-
-  families     only those found on every fold (--min-folds), since a global fit has no
-               held-out data and would favour the most complex form. Hand-added forms
-               (--extra-family) are exempt; the generalised logit A log eps + B log(1 - eps) + C
-               is added by default (--no-generalised-logit), because PySR's alphabet makes
-               A = -B nearly free and cannot reach it. The `source` column marks them.
-  errors       halo bootstrap: resample the 30 halos, rebuild the median, refit
-  front        Pareto front in (complexity, loss); score S_i = -d ln L / d C along it, with a
-               constant model at complexity 1 as the anchor (marked is_anchor, not a family)
-  complexity   recounted with core.sr_complexity on the refitted expression
-  physicality  re-checked on the constants quoted, since a CV verdict was on a fold's constants
-
 Reads   <cv>/pysr_families.csv, <cv>/folds.json, Halo_XX/df/scaled/df_ref<NN>_<method>_<tag>.csv
 Writes  <out>/global_median.csv, family_fits.csv, pareto_front.csv, bootstrap_params.csv,
         prediction_bands*.csv, loss_vs_complexity.png   (<out> = <cv>/global_fit)
