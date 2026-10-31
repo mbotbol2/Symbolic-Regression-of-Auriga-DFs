@@ -1,24 +1,5 @@
 """
 Compose a fitted expression back onto eps_hat, and find its simplest exact form.
-
-PySR fits log10 f = g(u) with u = T(eps_hat). The change of variable is part of the
-model, not a preprocessing step, so the object to report and to score for complexity is
-the composition g(T(eps_hat)). Substituting is mechanical; the work is afterwards.
-
-Composition leaves expressions in forms that are far from their simplest, and the
-distortion runs both ways. `exp(u)` under logit is a three-node pile of logs and
-exponentials until sympy cancels it to eps_hat/(1 - eps_hat); meanwhile logcombine turns
-the composed `(u - 2.13)*1.026` into a single log of a product of two non-integer powers,
-which is *larger* than what it started from. So no one simplification is right. Every
-candidate rewrite is tried, each is checked numerically on the fitted grid, and the
-cheapest survivor wins -- `best_form` is a minimisation over rewrites, not a call to
-`simplify`.
-
-The numerical check is not a formality. A rewrite that sympy considers valid can still be
-wrong on (0, 1): `force=True` on logcombine and powsimp lets it assume sign conditions it
-cannot prove, which is usually what we want on this domain and occasionally silently
-changes the function. Nothing is returned that does not reproduce the composed form on
-the grid to `RTOL`, so a bad rewrite is dropped rather than believed.
 """
 from __future__ import annotations
 
