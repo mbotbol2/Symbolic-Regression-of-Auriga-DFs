@@ -35,7 +35,6 @@ AurigaDFs/
     pipelines/        one script per stage, run in the order below
     paper_figures/    one notebook per figure or table
   Halo_Results/       outputs (we provide most of the small final products)
-  tests/              tests of core/physicality.py
 ```
 
 | Variable | What | Default |
