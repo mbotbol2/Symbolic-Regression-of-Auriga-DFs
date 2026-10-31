@@ -1,33 +1,5 @@
 """
-Structural (dimensionless) scaling of an isotropic DF.
-
-Rather than transforming particles and rebuilding ρ, Ψ and g(E) per halo, an already
-constructed f(E) can be put in dimensionless form analytically. With a length scale r_s
-and a density scale ρ_s (e.g. the NFW fit parameters), the natural units are
-
-    energy (per unit mass):  E_s = G ρ_s r_s^2
-    velocity:                V_s = sqrt(E_s) = r_s sqrt(G ρ_s)
-    mass:                    M_s = ρ_s r_s^3
-    DF (mass per phase-space volume):
-                             f_s = M_s / (r_s^3 V_s^3) = 1 / (G^{3/2} ρ_s^{1/2} r_s^3)
-
-so the dimensionless DF is
-
-    f̂ = G^{3/2} r_s^3 ρ_s^{1/2} f.
-
-Two halos whose density profiles are related by a similarity transform have the same f̂
-once their energies are put on a common footing. Mapping halo i onto a reference halo's
-units instead of fully dimensionless ones,
-
-    f_{i→ref} = f_i (r_{s,i}/r_{s,ref})^3 (ρ_{s,i}/ρ_{s,ref})^{1/2},
-
-which is the same curve re-dimensionalised in the reference halo's units.
-
-Note on the abscissa: every curve here, stored or returned, uses ε̂ = E/Ψ_i(0). It pins both
-endpoints for every halo (0 = escape, 1 = potential centre), so the cliff at ε̂ → 1 aligns
-across the sample. Ψ_i(0) is a halo-dependent energy scale set by the potential depth (and
-hence by the inner grid radius and total mass) rather than by the structure of the profile,
-which is a caveat to state rather than a reason to use a different abscissa.
+Scaling of distribution function to some reference halo, or dimensionless object.
 """
 from __future__ import annotations
 
