@@ -19,15 +19,7 @@ ATOL = 1e-12
 N_REWRITES = 20
 
 # Largest c(u) worth composing and simplifying, inclusive: expressions at or below this
-# are put through the full rewrite search, larger ones are left alone.
-#
-# The cost is not gradual. `sp.simplify` with a custom measure explores a rewrite tree
-# whose size grows with the expression, and a composed maxsize-40 front is large enough
-# that a single candidate can run for minutes or fail to return at all -- the composition
-# has already multiplied the tree by the transform's own nodes before the simplifier
-# starts. The forms up there are also the ones least worth the wait: they are deep in the
-# overfitted tail of the Pareto front, past where any of them is a claim about the DF.
-# The cutoff buys back the runtime at the cost of nothing that gets reported on.
+# are put through the full rewrite search, larger ones are left alone. The cost is not gradual. 
 MAX_COMPLEXITY_U = 20
 
 # PySR writes its fitted expressions in `u`; `x0` appears when variable_names is unset.
@@ -158,10 +150,6 @@ def _rewrites(e: sp.Expr):
     yield "substitution", e
     for name, fn in (
         ("full_simplify", _full_simplify),
-        # sympy's own full simplification, unmodified, so that whatever `simplify` would
-        # have returned is always among the candidates and the result can never be worse
-        # than simply calling it. It optimises count_ops rather than the node metric, so
-        # it is a candidate and not the answer.
         ("sympy_simplify", sp.simplify),
         ("cancel",        sp.cancel),
         ("together",      sp.together),
@@ -230,18 +218,12 @@ def best_form(expr, transform: str, grid: np.ndarray | None = None) -> Composed:
     """Compose onto eps_hat and return the lowest-complexity form that is exact on the grid."""
     g = default_grid() if grid is None else np.asarray(grid, float)
     e_u = expr if isinstance(expr, sp.Expr) else parse(expr)
-    # Counted on the unevaluated tree, so complexity_u reproduces PySR's own column and
-    # the step up to complexity_eps is the true cost of the change of variable.
     e_u_raw = expr if isinstance(expr, sp.Expr) else parse(expr, evaluate=False)
     c_u = complexity(e_u_raw)
 
     # The unsimplified graft is both the numerical reference and the baseline to beat.
     reference = compose_raw(e_u_raw, transform)
     best, best_c, best_name, n_ok = reference, complexity(reference), "substitution", 0
-    # Tracked separately: sympy simplifies harder than PySR ever could, and will happily
-    # leave the operator set to do it -- tan_pi composes to -cot(pi*eps_hat), which is
-    # cheaper but is not an expression the search could have produced. A cost quoted as a
-    # PySR complexity has to be payable in PySR's own alphabet.
     in_best, in_c = (reference, best_c) if not outside_alphabet(reference) else (None, None)
     seen: set[str] = {sp.srepr(reference)}
     for name, cand in _rewrites(compose(e_u, transform)):
@@ -261,18 +243,11 @@ def best_form(expr, transform: str, grid: np.ndarray | None = None) -> Composed:
         if not outside_alphabet(cand) and (in_c is None or c < in_c):
             in_best, in_c = cand, c
 
-    # The graft is built unevaluated, so it prints artefacts like `- 1*2.55` even when it
-    # is genuinely the cheapest form. Hand back sympy's tidy version of it where that
-    # costs nothing, so the reported expression is readable and the count is unchanged.
     if best_name == "substitution":
         tidy = compose(e_u, transform)
         if complexity(tidy) == best_c and _agrees(tidy, reference, g):
             best = tidy
 
-    # Cosmetic pass, applied whichever candidate won. It is exact by construction --
-    # folding Mul(-1, c) to -c and dropping unit factors cannot change a value -- so it
-    # is not put through _agrees, which would reject it wherever the composed function
-    # has poles on the grid and leave `1*` in the printed form for tan_pi alone.
     stripped = _tidy(best)
     if complexity(stripped) == best_c:
         best = stripped
