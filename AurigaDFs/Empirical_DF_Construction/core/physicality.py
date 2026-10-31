@@ -1,24 +1,5 @@
 """
-The physicality conditions of Table 1, tested on a fitted form over the whole of (0, 1):
-
-    low-energy        f -> 0 as eps_hat -> 0       (log10 f -> -oo)
-    monotonicity      df/deps_hat > 0 on (0, 1)
-    well-definedness  f finite and real on (0, 1)
-
-The fits only see eps_hat up to ~0.999, so the curve is generated from the expression on a
-grid reaching 1e-300 from both ends. Float64 cannot write 1 - 1e-20, so the upper half is
-swept in t = 1 - eps_hat instead.
-
-Monotonicity and well-definedness are swept numerically. A sweep can refute but never
-prove, so their verdicts are REFUTED or NOT_REFUTED. Each counterexample is re-checked with
-mpmath at a precision that grows with the abscissa before it counts.
-
-The low-energy limit is decided symbolically by sympy (Gruntz), since a sweep cannot tell a
-slow divergence like -log(-log(eps_hat)) from a finite limit. It can return HOLDS. The limit
-is capped by a timeout, and a sum is retried term by term.
-
-Every phase is time-capped. A phase that runs out is UNDECIDED: neither a pass nor a
-refutation, and reported separately (`Physicality.status`).
+A necessary, but not sufficient, numerical verification of the physicality constraints discussed in the paper. 
 """
 from __future__ import annotations
 
@@ -340,9 +321,6 @@ def low_energy_limit(e: sp.Expr, timeout: int = LIMIT_TIMEOUT) -> tuple[Verdict,
     if lim == sp.oo or lim.is_finite:
         return Verdict.REFUTED, f"tends to {sp.sstr(lim)}, not to -oo{how}"
     return Verdict.UNDECIDED, f"sympy returned {sp.sstr(lim)}"   # e.g. an unevaluated Limit
-
-
-# --------------------------------------------------------------------------------------
 
 def check(equation: str, transform: str | None = None,
           grid: np.ndarray | None = None, keep_sides: bool = False,
