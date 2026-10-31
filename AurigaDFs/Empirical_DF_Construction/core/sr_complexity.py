@@ -1,18 +1,5 @@
 """
 PySR's complexity metric, evaluated on a sympy expression.
-
-PySR counts nodes in its own tree: every operator, variable and constant weighs 1, and
-operators are binary. sympy's tree differs, so the count is reproduced here for expressions
-that have been composed and simplified, where equations.csv's number no longer applies:
-
-  - an n-argument Add or Mul costs n - 1 operator nodes
-  - subtraction, negation and division (Add(a, -b), -a, a/b in sympy) cost 1 each
-  - u**n is built as repeated products (no ^ in the alphabet); sqrt is one unary node
-  - a non-integer power cannot be built by the search: counted at weight 1 and reported by
-    `operators_used`
-
-sympy normalises on parse (e.g. distributes a constant over a sum), so a recount of a PySR
-expression can exceed PySR's own number; PySR's column is kept as provenance.
 """
 from __future__ import annotations
 
