@@ -1,49 +1,42 @@
 # Symbolic Regression of Dark-Matter-Only Auriga Halo Distribution Functions
 
-This repository measures the isotropic distribution function f(E) of the 30 dark-matter-only
-Auriga haloes, scales the curves to a common dimensionless form, and searches for analytic
-expressions with symbolic regression (PySR) under cross-validation. It contains the code, the
+## About
+
+This repo constructs the empirical distribution functions of the 30 dark-matter-only (DMO)
+Auriga halos, under the spherical isotropic assumption. Then, it transforms curves to the same dimensionless object, and searches for analytic
+expressions with symbolic regression (PySR) under cross-validation. It provides the code, the
 processed results, and one notebook for every figure and table in the paper.
 
-## Getting the simulations
+## Getting the simulation data
 
-The haloes are the 30 level-4 dark-matter-only runs (`Original_DMO/4`) of the Auriga public
+The halos are the 30 level-4 DMO runs (`Original_DMO/4`) of the Auriga public
 release ([Grand et al. 2024](https://ui.adsabs.harvard.edu/abs/2024MNRAS.532.1814G)). The data
-is distributed through [Globus](https://globus.org): the collection is "The Auriga Simulations"
-on the endpoint "MPCDF DataHub Virgotng", and the steps are described at
+is distributed through [Globus](https://globus.org): the collection is "The Auriga Simulations", and the steps are described at
 <https://wwwmpa.mpa-garching.mpg.de/auriga/data.html>.
 
-For each halo you need the snapshots and group catalogues from snapshot 77 to 127 (the bound
-particles are selected from their orbits over that range) and, for Fig. 8 only, the merger
-trees `trees_sf1_127.*.hdf5`. Point `AURIGA_DATA` at the folder that holds the haloes:
+For each halo you need the snapshots and group catalogues from snapshot 77 to 127. Point `AURIGA_DATA` at the folder that holds the haloes, with the following CLI command
 
 ```bash
 export AURIGA_DATA=/path/to/Auriga
 ```
 
-The code looks for `Halo N/` (or `Halo_NN/`) folders containing `Snapshots/` and `Groups/`,
-either directly or one level down in a `Z*/` folder. If the release unpacks differently, a few
-symlinks into this shape are enough.
-
-You do not need the simulations to reproduce most of the paper: the processed results in
+The code assumes the following file structure. Folders `Halo N/` containing `Snapshots/` and `Groups/`,
+either directly or one level down in a `Z*/` folder.  You do not need the simulations to reproduce most of the paper: the processed results in
 `AurigaDFs/Halo_Results/` (DFs, density fits, cross-validation fronts and the global fit) are
-part of the repository. Only Figs. 1 and 8, and the particle profiles of Fig. 7, read particles.
+part of the repository. Only Figs. 1 and 8, and the particle profiles of Fig. 7, read particle data directly.
 
 ## What is where
-
 ```
 AurigaDFs/
   Empirical_DF_Construction/
-    io/               reading snapshots and group catalogues; all paths (results_paths.py)
-    bound_selection/  bound particles, from pericentre/apocentre sign flips
+    io/               reading snapshots and group catalogues, all paths configs (results_paths.py)
+    bound_selection/  bound selection procedure
     core/             DF, density fits, scaling, Eddington inversion, SR complexity, physicality
     pipelines/        one script per stage, run in the order below
     paper_figures/    one notebook per figure or table
-  Halo_Results/       outputs (the small final products are tracked; particle IDs are not)
+  Halo_Results/       outputs (we provided most of the small final products)
   tests/              tests of core/physicality.py
 ```
-
-No path is hard-coded. Everything resolves through `io/results_paths.py` or these variables:
 
 | Variable | What | Default |
 |---|---|---|
@@ -57,13 +50,13 @@ No path is hard-coded. Everything resolves through `io/results_paths.py` or thes
 
 Run from `AurigaDFs/` in a Python environment with numpy, scipy, sympy, pandas, h5py and PySR.
 Each stage reads what the previous one wrote to `Halo_Results`, skips work already done, and
-redoes it with `--force`.
+redoes it with `--force`. Use the following CLI commands
 
 ```bash
 P="python -m Empirical_DF_Construction.pipelines"
-H=$(seq 1 30)          # all haloes (in zsh, write --halos $(seq 1 30))
+H=$(seq 1 30)          
 
-# 1. bound particles, density profiles and NFW/Einasto fits, raw DFs   (needs AURIGA_DATA)
+# 1. bound particles, density profiles and NFW/Einasto fits, raw DFs
 $P.build_ids              --halos $H
 $P.build_density_profiles --halos $H --method with_hubble_flow
 $P.build_df_raw           --halos $H
@@ -87,7 +80,7 @@ $P.fit_families_global  --cv-dir $CV
 The other particle selections compared in Figs. 1-2 use the same stages with
 `--method without_hubble_flow`, plus `naive_radial_selection`, `build_density_naive_radial` and
 `build_df_raw_fixed_point`. `check_against_catalogue` compares the bound sets with the
-SUBFIND/FoF catalogue (masses, V_max, velocity dispersion, virial ratio).
+SUBFIND/FoF catalogue.
 
 ## Figures and tables
 
