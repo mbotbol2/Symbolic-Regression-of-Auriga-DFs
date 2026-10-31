@@ -98,8 +98,4 @@ its output.
 | `fig7_table4_physical_consequences` | Fig. 7, Table 4 | for the halo profiles |
 | `fig8_radial_motion` | Fig. 8 | yes |
 
-## Tests
 
-```bash
-python tests/test_physicality.py      # or: pytest tests
-```
