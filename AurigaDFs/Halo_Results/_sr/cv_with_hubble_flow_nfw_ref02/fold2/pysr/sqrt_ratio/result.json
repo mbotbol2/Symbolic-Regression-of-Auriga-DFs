@@ -1,0 +1,74 @@
+{
+  "cv_dir": "/data/mrb209/AurigaDFs/Halo_Results/_sr/cv_with_hubble_flow_nfw_ref02",
+  "fold": 2,
+  "transform": "sqrt_ratio",
+  "n_train_points": 400,
+  "niterations": 2000,
+  "populations": 36,
+  "maxsize": 40,
+  "binary_operators": [
+    "+",
+    "-",
+    "*",
+    "/"
+  ],
+  "unary_operators": [
+    "log",
+    "exp",
+    "sqrt",
+    "asin",
+    "sinh"
+  ],
+  "nested_constraints": {
+    "log": {
+      "log": 0,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 1
+    },
+    "exp": {
+      "log": 1,
+      "exp": 0,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 1
+    },
+    "sqrt": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 0,
+      "asin": 1,
+      "sinh": 1
+    },
+    "asin": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 0,
+      "sinh": 1
+    },
+    "sinh": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 0
+    }
+  },
+  "seed": null,
+  "deterministic": false,
+  "test_halos": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "best_equation": "(log((u + 0.12029766) + (0.26581943 / (1.4309394 - (exp(sinh(0.69295555 / u)) * -0.020019207)))) + (-0.9999137 - (0.8927661 / (u + 0.5814571)))) / 0.56364363",
+  "best_complexity": 26,
+  "best_train_loss": 0.00040444077,
+  "n_front": 28,
+  "scored": false,
+  "scores": []
+}

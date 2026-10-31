@@ -1,0 +1,74 @@
+{
+  "cv_dir": "/data/mrb209/AurigaDFs/Halo_Results/_sr/cv_with_hubble_flow_nfw_ref02",
+  "fold": 6,
+  "transform": "identity",
+  "n_train_points": 400,
+  "niterations": 2000,
+  "populations": 36,
+  "maxsize": 40,
+  "binary_operators": [
+    "+",
+    "-",
+    "*",
+    "/"
+  ],
+  "unary_operators": [
+    "log",
+    "exp",
+    "sqrt",
+    "asin",
+    "sinh"
+  ],
+  "nested_constraints": {
+    "log": {
+      "log": 0,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 1
+    },
+    "exp": {
+      "log": 1,
+      "exp": 0,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 1
+    },
+    "sqrt": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 0,
+      "asin": 1,
+      "sinh": 1
+    },
+    "asin": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 0,
+      "sinh": 1
+    },
+    "sinh": {
+      "log": 1,
+      "exp": 1,
+      "sqrt": 1,
+      "asin": 1,
+      "sinh": 0
+    }
+  },
+  "seed": null,
+  "deterministic": false,
+  "test_halos": [
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "best_equation": "(((sinh(u + 1.3415357) - (2.7710835e-6 / (u * (u * u)))) * log(u * 0.6996216)) + sinh(((asin(u) * asin(u)) * (0.87024295 * asin(u))) + -1.0022006)) + 1.8980197",
+  "best_complexity": 33,
+  "best_train_loss": 0.0003969185,
+  "n_front": 36,
+  "scored": false,
+  "scores": []
+}

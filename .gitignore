@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# macOS, iCloud
+.DS_Store
+*.icloud
+
+# Halo_Results: the full tree (~15 GB) lives on the cluster. Only the small final products
+# are tracked: fits, DFs, scales, CV setup, fronts and the global fit. Not the particle IDs,
+# the bootstrap draws (they regenerate from --seed), PySR's run folders or diagnostic plots.
+AurigaDFs/Halo_Results/**
+!AurigaDFs/Halo_Results/**/
+!AurigaDFs/Halo_Results/Halo_*/density/*.json
+!AurigaDFs/Halo_Results/Halo_*/density/*.csv
+!AurigaDFs/Halo_Results/Halo_*/df/raw/*.csv
+!AurigaDFs/Halo_Results/Halo_*/df/raw/*_meta.json
+!AurigaDFs/Halo_Results/Halo_*/df/scaled/*.csv
+!AurigaDFs/Halo_Results/Halo_*/df/scaled/*.json
+!AurigaDFs/Halo_Results/Halo_*/ids/*.json
+!AurigaDFs/Halo_Results/_sr/*/folds.json
+!AurigaDFs/Halo_Results/_sr/*/cv_summary.csv
+!AurigaDFs/Halo_Results/_sr/*/pysr_families.csv
+!AurigaDFs/Halo_Results/_sr/*/fold*/pysr_*.csv
+!AurigaDFs/Halo_Results/_sr/*/fold*/test/*.csv
+!AurigaDFs/Halo_Results/_sr/*/fold*/transforms/*.csv
+!AurigaDFs/Halo_Results/_sr/*/fold*/pysr/*/equations.csv
+!AurigaDFs/Halo_Results/_sr/*/fold*/pysr/*/config.json
+!AurigaDFs/Halo_Results/_sr/*/fold*/pysr/*/result.json
+!AurigaDFs/Halo_Results/_sr/*/global_fit/*.csv
+AurigaDFs/Halo_Results/_sr/*/global_fit/bootstrap_params.csv
+AurigaDFs/Halo_Results/_sr/*/global_fit/best_median_worst_per_halo.csv
+AurigaDFs/Halo_Results/_sr/*/fold*/pysr/*/*/
+
+# Other outputs
+AurigaDFs/*.png
+AurigaDFs/Empirical_DF_Construction/*.png
+
+# Figure data and renders: the notebooks in paper_figures/ are tracked, their output is not
+AurigaDFs/Empirical_DF_Construction/paper_figures/output/
+AurigaDFs/Empirical_DF_Construction/paper_figures/gnuplot/
+AurigaDFs/Empirical_DF_Construction/paper_figures/fig7/
+*.dat

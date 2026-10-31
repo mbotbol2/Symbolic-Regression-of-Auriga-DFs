@@ -1,0 +1,18 @@
+{
+  "Mtot_enc_msun": 1457750054228.4905,
+  "Psi0": 140348.721294106,
+  "center_mode": "subhalo",
+  "df_potential_outer_boundary": "rmax",
+  "df_potential_zero_at": "infty",
+  "g_kepler_tail": true,
+  "halo": 9,
+  "mass_normalised": false,
+  "method": "with_hubble_flow",
+  "n_use": 3458112,
+  "pt": 1,
+  "r_max_q": null,
+  "r_min_q": 1e-06,
+  "rmax_kpc": 2421.9147626318418,
+  "snap": 127,
+  "u_edge": 0.018444891562099566
+}

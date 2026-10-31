@@ -1,0 +1,9 @@
+{
+  "center_mode": "subhalo",
+  "halo": 25,
+  "n_bound": 3606998,
+  "n_total": 10524384,
+  "pt": 1,
+  "snap_max": 127,
+  "snap_min": 77
+}

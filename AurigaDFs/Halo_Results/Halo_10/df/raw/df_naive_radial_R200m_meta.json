@@ -1,0 +1,20 @@
+{
+  "Mtot_enc_msun": 1270709392584.0024,
+  "Psi0": 124759.44200396545,
+  "R200m_kpc": 338.4106038189117,
+  "center_mode": "subhalo",
+  "df_potential_outer_boundary": "rmax",
+  "df_potential_zero_at": "infty",
+  "g_kepler_tail": true,
+  "halo": 10,
+  "mass_normalised": false,
+  "method": "naive_radial_R200m",
+  "n_particles": 3387936,
+  "n_use": 3357072,
+  "pt": 1,
+  "r_max_q": null,
+  "r_min_q": 1e-06,
+  "rmax_kpc": 338.4105691044555,
+  "snap": 127,
+  "u_edge": 0.12944618417431675
+}

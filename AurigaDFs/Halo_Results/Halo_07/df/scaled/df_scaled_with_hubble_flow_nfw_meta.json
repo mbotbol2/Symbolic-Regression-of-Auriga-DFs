@@ -1,0 +1,19 @@
+{
+  "E_s_kms2": 9472.447642279605,
+  "Psi0": 113086.7762841648,
+  "Psi0_over_E_s": 11.938495788502426,
+  "density_scale_msun_kpc3": 2978884.134835366,
+  "eps_hi": 0.999,
+  "eps_lo": 0.03,
+  "from": "df_raw_with_hubble_flow.csv",
+  "halo": 7,
+  "length_scale_kpc": 27.190933870694835,
+  "method": "with_hubble_flow",
+  "particle_rescaling": false,
+  "ref_Psi0": 182826.90766315628,
+  "ref_density_scale_msun_kpc3": 4839844.488965556,
+  "ref_halo": 2,
+  "ref_length_scale_kpc": 27.108068254420427,
+  "scale_by": "rs",
+  "scale_src": "density_fit_params_with_hubble_flow.json:nfw"
+}

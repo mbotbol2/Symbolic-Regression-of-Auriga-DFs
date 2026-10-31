@@ -1,0 +1,5 @@
+index,form
+f0,C + C/eps_hat + log(eps_hat) - log(1 - eps_hat)
+f1,C + log(eps_hat) - log(1 - eps_hat)
+f2,C*log(eps_hat)
+f3,C*log(eps_hat) + C*log(1 - eps_hat) + C
