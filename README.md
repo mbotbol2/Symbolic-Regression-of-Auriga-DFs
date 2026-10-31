@@ -34,7 +34,7 @@ AurigaDFs/
     core/             DF, density fits, scaling, Eddington inversion, SR complexity, physicality
     pipelines/        one script per stage, run in the order below
     paper_figures/    one notebook per figure or table
-  Halo_Results/       outputs (we provided most of the small final products)
+  Halo_Results/       outputs (we provide most of the small final products)
   tests/              tests of core/physicality.py
 ```
 
