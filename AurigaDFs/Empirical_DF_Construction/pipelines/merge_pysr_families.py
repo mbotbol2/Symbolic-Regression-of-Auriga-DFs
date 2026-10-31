@@ -1,23 +1,6 @@
 """
 Collapse each fold's front to one point per functional family, then report what folds agree on.
 
-The alphabet writes one function more than one way (logit at c=10 and sqrt_ratio at c=12 are
-the same model), so rows are grouped by family: every fitted Float becomes a free parameter
-and two rows are one family if their canonical forms are symbolically equal. Integers stay,
-so the 1 in (1 - eps_hat) is shape, not a parameter. Canonicalisation:
-
-  log arguments   oriented so the denominator is positive at eps_hat = 1/2
-  expand_log      pulls sqrt out of a log as a rational factor
-  content         a rational factor beside a parameter is absorbed into it
-  collapse        every eps-free group with a parameter becomes one parameter
-
-Equality is decided by a capped sympy.simplify; a pair it cannot decide is reported as
-undecided, not merged. --numeric-audit lists pairs equal on a grid that were not merged.
-
-Each fold's front ranks families by held-out mean_mse (from evaluate_pysr_cv) by default,
-which spends the test halos on selection; --scores none --loss-col train_loss gives the
-training-side front. Fronts are built per fold and only then compared.
-
 Reads   <cv>/fold<j>/pysr_physicality.csv, <cv>/fold<j>/pysr_holdout_summary.csv
 Writes  <cv>/fold<j>/pysr_front.csv   that fold's family-deduplicated front
         <cv>/pysr_families.csv        the families, and which folds found them
