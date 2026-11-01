@@ -6,9 +6,9 @@ __pycache__/
 .DS_Store
 *.icloud
 
-# Halo_Results: the full tree (~15 GB) lives on the cluster. Only the small final products
-# are tracked: fits, DFs, scales, CV setup, fronts and the global fit. Not the particle IDs,
-# the bootstrap draws (they regenerate from --seed), PySR's run folders or diagnostic plots.
+# Halo_Results: Only the small final products are tracked: fits, DFs, scales, CV setup, 
+# fronts and the global fit. Not the particle IDs,
+# the bootstrap draws, PySR's run folders or diagnostic plots.
 AurigaDFs/Halo_Results/**
 !AurigaDFs/Halo_Results/**/
 !AurigaDFs/Halo_Results/Halo_*/density/*.json
